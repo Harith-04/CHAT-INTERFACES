@@ -4,7 +4,8 @@ STUDENT ID: 2024223676
 
 GROUP: CDCS2703A
 
-LECTURER'S NAME: MUHAMMAD ATIF BIN RAMLAN/
+LECTURER'S NAME: MUHAMMAD ATIF BIN RAMLAN
+
 PROJECT BACKGROUND AND DISCUSSION:
 
   This project focuses on building a real-time chat application using Angular 20 for the front end and Supabase for the back end. The main purpose of this project is to help students understand how a simple chat      application works, including user login, sending messages, and receiving messages instantly. For this project, Google login is used so users can sign in easily, and Supabase is used to store user information and    chat messages. Although this project is designed as a learning experience, it is quite challenging for a student like me who has no background in computing. At the beginning of the project, many of the terms and    tools used feel confusing and unfamiliar. Words such as Angular, database, authentication, and real-time features are new to me. Following the setup steps is difficult because there are many instructions, and       missing even a small step can cause the application not to work. Sometimes, typing the wrong command or misunderstanding an instruction leads to errors that are hard to fix. Understanding how Google login works     and how Supabase handles user accounts also takes time, especially when I am not familiar with how online systems manage user data.
