@@ -1,76 +1,12 @@
-<!-- ## Database Table Schema -->
-## users table
+NAME: MUHAMMAD HARITH DANIAL BIN NORAZIZI
+STUDENT ID: 2024223676
+GROUP: CDCS2703A
+LECTURER'S NAME: MUHAMMAD ATIF BIN RAMLAN
+PROJECT BACKGROUND AND DISCUSSION:
 
-* id (uuid)
-* full_name (text)
-* avatar_url (text)
+  This project focuses on building a real-time chat application using Angular 20 for the front end and Supabase for the back end. The main purpose of this project is to help students understand how a simple chat      application works, including user login, sending messages, and receiving messages instantly. For this project, Google login is used so users can sign in easily, and Supabase is used to store user information and    chat messages. Although this project is designed as a learning experience, it is quite challenging for a student like me who has no background in computing. At the beginning of the project, many of the terms and    tools used feel confusing and unfamiliar. Words such as Angular, database, authentication, and real-time features are new to me. Following the setup steps is difficult because there are many instructions, and       missing even a small step can cause the application not to work. Sometimes, typing the wrong command or misunderstanding an instruction leads to errors that are hard to fix. Understanding how Google login works     and how Supabase handles user accounts also takes time, especially when I am not familiar with how online systems manage user data.
 
-## Creating a users table
+  Another challenge in this project is understanding how different parts of the application work together. The chat application is not just one page, but it includes several parts such as the login page, chat page,   and database. It is difficult at first to understand how messages are sent, saved, and then shown on the screen. Without technical knowledge, it is hard to imagine how information moves from the user interface to   the database and back to the application in real time.Even though the project is challenging, it provides many learning opportunities. Through this project, I slowly begin to understand how a web application        works behind the scenes. I learn that Angular is used to create what users see and interact with on the screen, while Supabase is responsible for storing data safely and managing user login. I also learn the        meaning of real-time features, where messages appear instantly without needing to refresh the page. This helps me understand how popular chat applications work in everyday life.
 
-```sql
-CREATE TABLE public.users (
-   id uuid not null references auth.users on delete cascade,
-   full_name text NULL,
-   avatar_url text NULL,
-   primary key (id)
-);
-```
+  Overall, this project helps me build confidence in learning technology despite having no computing background. Although the process can feel overwhelming and stressful at times, completing the project teaches me    patience, problem-solving skills, and the importance of following instructions carefully. With proper guidance and practice, this project shows that even students with no prior technical knowledge can understand    basic concepts of web applications and gain valuable skills for future learning.
 
-## Enable Row Level Security
-
-```sql
-ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
-```
-
-## Permit Users Access Their Profile
-
-```sql
-CREATE POLICY "Permit Users to Access Their Profile"
-  ON public.users
-  FOR SELECT
-  USING ( auth.uid() = id );
-```
-
-## Permit Users to Update Their Profile
-
-```sql
-CREATE POLICY "Permit Users to Update Their Profile"
-  ON public.users
-  FOR UPDATE
-  USING ( auth.uid() = id );
-```
-
-## Supabase Functions
-
-```sql
-CREATE
-OR REPLACE FUNCTION public.user_profile() RETURNS TRIGGER AS $$ BEGIN INSERT INTO public.users (id, full_name,avatar_url)
-VALUES
-  (
-    NEW.id,
-    NEW.raw_user_meta_data ->> 'full_name'::TEXT,
-    NEW.raw_user_meta_data ->> 'avatar_url'::TEXT,
-  );
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-```
-
-## Supabase Trigger
-
-```sql
-  CREATE TRIGGER
-  create_user_trigger
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE PROCEDURE
-    public.user_profile();
-```
-
-## Chat_Messages table (Real Time)
-
-* id (uuid)
-* Created At (date)
-* text (text)
-* editable (boolean)
-* sender (uuid)
